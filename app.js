@@ -11,7 +11,6 @@ http.createServer(function(request, response) {
   ls = spawn(PATHARCHOIND, ['getinfo']);
   ls.stdout.on('data', function (data) {
     response.write('<html><head><script>var walletdata='+data+';</scrypt></head><body></body></html>');
-    response.write(data);
     response.end();
   });
   ls.stderr.on('data', function (data) {
