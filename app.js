@@ -10,7 +10,7 @@ http.createServer(function(request, response) {
   response.writeHead(200, {'Content-Type': 'text/html'});
   ls = spawn(PATHARCHOIND, ['getinfo']);
   ls.stdout.on('data', function (data) {
-    response.write('<html><head><script>var walletdata='+data+';</scrypt></head><body></body></html>');
+    response.write('<html><head><script type="text/javascript">var wallet = '+data+';</script></head><body></body></html>');
     response.end();
   });
   ls.stderr.on('data', function (data) {
