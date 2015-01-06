@@ -7,9 +7,10 @@ var PATHARCHOIND = '/home/pi/ARCH/src/archcoind';
 
 
 http.createServer(function(request, response) {
-  response.writeHead(200, {'Content-Type': 'application/json'});
+  response.writeHead(200, {'Content-Type': 'text/html'});
   ls = spawn(PATHARCHOIND, ['getinfo']);
   ls.stdout.on('data', function (data) {
+    response.write('<html><head><script>var walletdata=eval("'+data+'");</scrypt></head><body></body></html>');
     response.write(data);
     response.end();
   });
