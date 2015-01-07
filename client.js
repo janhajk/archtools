@@ -1,4 +1,15 @@
+(function(){
+    var divContent = document.getElementById('content');
 
+    var divWallet = document.createElement('div');
+    divWallet.innerContent = wallet.data.balance;
+    div.Content.addChild(divWallet);
+})();
+
+/*
+ * AJAX functions
+ *
+ */
 var ajax = {};
 ajax.x = function() {
     if(typeof XMLHttpRequest !== 'undefined') {

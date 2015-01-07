@@ -12,12 +12,9 @@ http.createServer(function(request, response) {
     ls = spawn(config.path_wallet, ['getinfo']);
     ls.stdout.on('data', function(wallet_data) {
         fs.readFile('client.js', 'utf8', function(err, js) {
-            if(err) {
-                return console.log(err);
-            }
-            response.write('<html><head><script type="text/javascript">var wallet = ' + wallet_data + ';');
+            response.write('<html><head><script type="text/javascript">var wallet_data = ' + wallet_data + ';');
             response.write(js);
-            response.write('</script></head><body></body></html>');
+            response.write('</script></head><body><div id="content"></div></body></html>');
             response.end();
         });
     });
