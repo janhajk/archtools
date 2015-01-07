@@ -7,7 +7,7 @@ var url = require('url');
 
 
 http.createServer(function(request, response) {
-    var purl = url.parse(req.url, true);
+    var purl = url.parse(request.url, true);
     switch(purl.pathname) {
         case '/wallet':
             response.writeHead(200, {
