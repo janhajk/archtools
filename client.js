@@ -1,9 +1,11 @@
 (function(){
-    var divContent = document.getElementById('content');
+    
+    var divContent = document.createElement('content');
 
     var divWallet = document.createElement('div');
     divWallet.textContent = wallet_data.balance;
     divContent.appendChild(divWallet);
+    document.body.appendChild(divContent);
 })();
 
 /*
