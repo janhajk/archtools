@@ -3,7 +3,7 @@
 
     var divWallet = document.createElement('div');
     divWallet.innerContent = wallet_data.balance;
-    divContent.addChild(divWallet);
+    divContent.appendChild(divWallet);
 })();
 
 /*
