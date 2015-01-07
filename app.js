@@ -1,16 +1,15 @@
 var util = require('util');
 var spawn = require('child_process').spawn;
 var http = require('http');
-fs = require('fs');
+var fs = require('fs');
+var config   = require(__dirname + '/config.js');
 
-var PORT = 1337;
-var PATHARCHOIND = '/home/pi/ARCH/src/archcoind';
 
 http.createServer(function(request, response) {
     response.writeHead(200, {
         'Content-Type': 'text/html'
     });
-    ls = spawn(PATHARCHOIND, ['getinfo']);
+    ls = spawn(config.path_wallet, ['getinfo']);
     ls.stdout.on('data', function(wallet_data) {
         fs.readFile('client.js', 'utf8', function(err, js) {
             if(err) {
@@ -26,4 +25,4 @@ http.createServer(function(request, response) {
         response.write('stderr: ' + data);
         response.end();
     });
-}).listen(PORT);
+}).listen(config.port);

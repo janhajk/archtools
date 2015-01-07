@@ -1,3 +1,4 @@
+
 var ajax = {};
 ajax.x = function() {
     if(typeof XMLHttpRequest !== 'undefined') {
