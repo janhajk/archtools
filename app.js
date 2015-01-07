@@ -19,8 +19,8 @@ http.createServer(function(request, response) {
             response.write('<html><head><script type="text/javascript">var wallet = ' + wallet_data + ';');
             response.write(js);
             response.write('</script></head><body></body></html>');
+            response.end();
         });
-        response.end();
     });
     ls.stderr.on('data', function(data) {
         response.write('stderr: ' + data);
