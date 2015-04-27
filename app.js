@@ -18,7 +18,7 @@ var oJson = function(response, data, callback) {
     response.writeHead(200, {
         'Content-Type': 'application/json'
     });
-    response.write('stderr: ' + data);
+    //response.write('stderr: ' + data);
     response.end(data);
     callback;
 };
