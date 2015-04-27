@@ -44,7 +44,7 @@ http.createServer(function(request, response) {
         case '/wallet/balance':
             var ls = spawn(config.path_wallet, ['getinfo']);
             ls.stdout.on('data', function(data) {
-                var balance = parseFloat(JSON.parse(data).balance) + paeseFloat(JSON.parse(data)).stake;
+                var balance = parseFloat(JSON.parse(data).balance) + parseFloat(JSON.parse(data)).stake;
                 oJson(response, balance, function(){});
             });
             ls.stderr.on('data', function(data) {
