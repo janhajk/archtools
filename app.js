@@ -19,7 +19,7 @@ var oJson = function(response, data, callback) {
         'Content-Type': 'text/html' //'application/json'
     });
     console.log(data);
-    //response.write(data);
+    response.write(data.toString());
     response.end();
 };
 
