@@ -41,6 +41,9 @@ http.createServer(function(request, response) {
         case '/wallet/status':
             directWallet2Json('getinfo', response, function(){});
             break;
+        case '/wallet/listtransactions':
+            directWallet2Json('listtransactions', response, function(){});
+            break;
         case '/wallet/balance':
             var ls = spawn(config.path_wallet, ['getinfo']);
             ls.stdout.on('data', function(data) {
