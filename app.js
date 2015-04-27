@@ -18,20 +18,19 @@ var oJson = function(response, data, callback) {
     response.writeHead(200, {
         'Content-Type': 'application/json'
     });
-    //response.write('stderr: ' + data);
-    response.end(data);
-    callback;
+    response.write(data);
+    response.end(callback());
 };
 
 var directWallet2Json = function(call, response, callback) {
     var ls = spawn(config.path_wallet, [call]);
 
     ls.stdout.on('data', function(data) {
-        oJson(response, data, function(){callback});
+        oJson(response, data, function(){callback()});
     });
 
     ls.stderr.on('data', function(data) {
-        oJson(response, 'stderr: ' + data, function(){callback});
+        oJson(response, 'stderr: ' + data, function(){callback()});
     });
 };
 
