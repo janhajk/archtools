@@ -19,7 +19,7 @@ var oJson = function(response, data, callback) {
         'Content-Type': 'text/html' //'application/json'
     });
     response.write(data);
-    response.end(callback);
+    response.end();
 };
 
 var directWallet2Json = function(call, response, callback) {
