@@ -11,6 +11,10 @@ var calls = {
         protected: false,
         call: 'getinfo'
     },
+    'listtransactions' : {
+        protected: false,
+        call 'listtransactions'
+    },
 };
 
 
@@ -55,7 +59,7 @@ http.createServer(function(request, response) {
             });
             break;
         case '/wallet/connections':
-            var ls = spawn(config.path_wallet, ['connections']);
+            var ls = spawn(config.path_wallet, ['getinfo']);
             ls.stdout.on('data', function(data) {
                 var connections = parseFloat(JSON.parse(data).connections);
                 oJson(response, connections, function(){});
