@@ -2,14 +2,29 @@ var util = require('util');
 var spawn = require('child_process').spawn;
 var http = require('http');
 var fs = require('fs');
-var config   = require(__dirname + '/config.js');
 var url = require('url');
+
+var config   = require(__dirname + '/config.js');
 
 
 http.createServer(function(request, response) {
     var purl = url.parse(request.url, true);
     switch(purl.pathname) {
+        case '/wallet/status':
+            response.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
+            ls = spawn(config.path_wallet, ['getinfo']);
+            ls.stdout.on('data', function(data) {
+                response.end(data);
+            });
+            ls.stderr.on('data', function(data) {
+                response.write('stderr: ' + data);
+                response.end();
+            });
+            break;
         case '/wallet':
+        default:
             response.writeHead(200, {
                 'Content-Type': 'text/html'
             });
@@ -20,19 +35,6 @@ http.createServer(function(request, response) {
                     response.write('<script type="text/javascript">var wallet_data = ' + wallet_data + ';' + js + '</script></html>');
                     response.end();
                 });
-            });
-            ls.stderr.on('data', function(data) {
-                response.write('stderr: ' + data);
-                response.end();
-            });
-            break;
-        case '/wallet/status':
-            response.writeHead(200, {
-                'Content-Type': 'application/json'
-            });
-            ls = spawn(config.path_wallet, ['getinfo']);
-            ls.stdout.on('data', function(data) {
-                response.end(data);
             });
             ls.stderr.on('data', function(data) {
                 response.write('stderr: ' + data);
