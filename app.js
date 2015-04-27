@@ -6,21 +6,50 @@ var url = require('url');
 
 var config   = require(__dirname + '/config.js');
 
+var calls = {
+    'getinfo' : {
+        protected: false,
+        call: 'getinfo'
+    },
+};
+
+
+var oJson = function(response, data, callback) {
+    response.writeHead(200, {
+        'Content-Type': 'application/json'
+    });
+    response.write('stderr: ' + data);
+    response.end(data);
+    callback;
+};
+
+var directWallet2Json = function(call, response, callback) {
+    var ls = spawn(config.path_wallet, [call]);
+
+    ls.stdout.on('data', function(data) {
+        oJson(response, data, function(){callback});
+    });
+
+    ls.stderr.on('data', function(data) {
+        oJson(response, 'stderr: ' + data, function(){callback});
+    });
+};
+
 
 http.createServer(function(request, response) {
     var purl = url.parse(request.url, true);
     switch(purl.pathname) {
         case '/wallet/status':
-            response.writeHead(200, {
-                'Content-Type': 'application/json'
-            });
-            ls = spawn(config.path_wallet, ['getinfo']);
+            directWallet2Json('getinfo', response, function(){});
+            break;
+        case '/wallet/balance':
+            var ls = spawn(config.path_wallet, ['getinfo']);
             ls.stdout.on('data', function(data) {
-                response.end(data);
+                var balance = data.balance;
+                oJson(response, balance, function(){});
             });
             ls.stderr.on('data', function(data) {
-                response.write('stderr: ' + data);
-                response.end();
+                oJson(response, 'stderr: ' + data, function(){});
             });
             break;
         case '/wallet':
