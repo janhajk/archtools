@@ -16,9 +16,8 @@ var calls = {
 
 var oJson = function(response, data, callback) {
     response.writeHead(200, {
-        'Content-Type': 'text/html' //'application/json'
+        'Content-Type': 'text/html'
     });
-    console.log(data);
     response.write(data.toString());
     response.end();
 };
@@ -45,8 +44,18 @@ http.createServer(function(request, response) {
         case '/wallet/balance':
             var ls = spawn(config.path_wallet, ['getinfo']);
             ls.stdout.on('data', function(data) {
-                var balance = JSON.parse(data).balance;
+                var balance = parseFloat(JSON.parse(data).balance) + paeseFloat(JSON.parse(data).stake;
                 oJson(response, balance, function(){});
+            });
+            ls.stderr.on('data', function(data) {
+                oJson(response, 'stderr: ' + data, function(){});
+            });
+            break;
+        case '/wallet/connections':
+            var ls = spawn(config.path_wallet, ['connections']);
+            ls.stdout.on('data', function(data) {
+                var connections = parseFloat(JSON.parse(data).connections);
+                oJson(response, connections, function(){});
             });
             ls.stderr.on('data', function(data) {
                 oJson(response, 'stderr: ' + data, function(){});
