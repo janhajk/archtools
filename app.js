@@ -18,6 +18,7 @@ var oJson = function(response, data, callback) {
     response.writeHead(200, {
         'Content-Type': 'text/html' //'application/json'
     });
+    console.lg(data);
     response.write(data);
     response.end();
 };
@@ -44,7 +45,7 @@ http.createServer(function(request, response) {
         case '/wallet/balance':
             var ls = spawn(config.path_wallet, ['getinfo']);
             ls.stdout.on('data', function(data) {
-                var balance = JSON.parse(data);
+                var balance = JSON.parse(data).balance;
                 oJson(response, balance, function(){});
             });
             ls.stderr.on('data', function(data) {
